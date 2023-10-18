@@ -12,40 +12,21 @@ jobs:
       - name: Checkout own repository
         uses: actions/checkout@v4
 
-      #- name: Checkout flutter/web_installers repository
-      #  uses: actions/checkout@v4
-      #  with:
-      #    repository: flutter/web_installers
-      #    path: web_installers
-
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - run: flutter --version
+          run: flutter doctor -v
 
-      #- name: Run web installers
-      #  run: |
-      #    cd web_installers/packages/web_drivers/
-      #    dart pub get
-      #    dart lib/web_driver_installer.dart &
-      #    sleep 20
-      #- name: Run chrome driver
-      #  run: |
-      #    chromedriver/chromedriver --port=4444 &
-      #    sleep 5
       - name: Setup chrome driver
         uses: nanasess/setup-chromedriver@v2
-        # with:
-        # Optional: do not specify to match Chrome's version
-        # chromedriver-version: '88.0.4324.96'
+
       - name: Run chrome driver
         run: |
           chromedriver --url-base=/wd/hub --port=4444 &
-          sleep 5
 
       # REF: https://remarkablemark.org/blog/2020/12/12/headless-test-in-github-actions-workflow/
       - name: Run headless browser tests
         uses: GabrielBB/xvfb-action@v1
         with:
-          run: flutter drive --driver=test_driver/integration_test.dart -d chrome --release --browser-name=chrome
+          run: flutter drive --driver=test_driver/integration_test.dart --target integration_test/app_test.dart -d chrome --release --browser-name=chrome

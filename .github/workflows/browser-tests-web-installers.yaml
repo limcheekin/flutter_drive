@@ -12,24 +12,11 @@ jobs:
       - name: Checkout own repository
         uses: actions/checkout@v4
 
-      #- name: Checkout flutter/web_installers repository
-      #  uses: actions/checkout@v4
-      #  with:
-      #    repository: flutter/web_installers
-      #    path: web_installers
-
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
           run: flutter doctor -v
-
-      #      - name: Run web installers
-      #        run: |
-      #          cd web_installers/packages/web_drivers/
-      #          dart pub get
-      #          dart lib/web_driver_installer.dart &
-      #          sleep 20
 
       - name: Run chrome driver
         run: |
@@ -39,4 +26,4 @@ jobs:
           dart lib/web_driver_installer.dart chromedriver &
 
       - name: Run browser tests
-        run: flutter drive --driver=test_driver/integration_test.dart -d web-server --release --browser-name=chrome
+        run: flutter drive --driver=test_driver/integration_test.dart --target integration_test/app_test.dart -d web-server --release --browser-name=chrome
