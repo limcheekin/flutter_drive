@@ -44,5 +44,8 @@ jobs:
           chromedriver --url-base=/wd/hub --port=4444 &
           sleep 5
 
-      - name: Run browser tests
-        run: flutter drive --driver=test_driver/integration_test.dart -d chrome --release --browser-name=chrome
+      # REF: https://remarkablemark.org/blog/2020/12/12/headless-test-in-github-actions-workflow/
+      - name: Run headless browser tests
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: flutter drive --driver=test_driver/integration_test.dart -d chrome --release --browser-name=chrome
