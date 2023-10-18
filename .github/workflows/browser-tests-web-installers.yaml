@@ -16,7 +16,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          run: flutter doctor -v
+      - run: flutter doctor -v
 
       - name: Run chrome driver
         run: |
