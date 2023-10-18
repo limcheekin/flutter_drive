@@ -1,8 +1,6 @@
 name: Run Browser Tests
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
